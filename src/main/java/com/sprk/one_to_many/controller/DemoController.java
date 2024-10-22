@@ -29,7 +29,12 @@ public class DemoController {
 
     @GetMapping("/getbyid/{instructorId}")
     public Instructor getInstructorById(@PathVariable int instructorId) {
-        return appDao.getInstructorById(instructorId);
+
+        Instructor instructor = appDao.getInstructorById(instructorId);
+
+        System.out.println(instructor);
+        System.out.println("Courses:- " +instructor.getCourses());
+        return instructor;
     }
 
     @GetMapping("/getall")
@@ -75,7 +80,7 @@ public class DemoController {
         Instructor instructor = instructorDetail.getInstructor();
         instructor.setInstructorDetail(instructorDetail);
 
-      return appDao.saveInstructor(instructor);
+        return appDao.saveInstructor(instructor);
 
     }
 
@@ -92,5 +97,18 @@ public class DemoController {
 
         return appDao.updateInstrutorDetail(instructorId, instructorDetail);
     }
+
+    //    Finding courses based on instructorId
+    @GetMapping("/getcoursesbyid/{instructorId}")
+    public List<Course> getCoursesByInstructorId(@PathVariable int instructorId) {
+
+        Instructor instructor = appDao.getInstructorById(instructorId);
+
+//        System.out.println(instructor);
+//        System.out.println(instructor.getCourses());
+        return instructor.getCourses();
+    }
+
 }
+
 

@@ -4,6 +4,7 @@ import com.sprk.one_to_many.entity.Instructor;
 import com.sprk.one_to_many.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,10 @@ public class AppDao {
     }
 
     public Instructor getInstructorById(int id) {
-        return entityManager.find(Instructor.class, id);
+        Instructor instructor = entityManager.find(Instructor.class, id);
+
+//        Hibernate.initialize(instructor.getCourses()); // Ensure courses are loaded only when needed
+        return instructor;
     }
 
     @Transactional

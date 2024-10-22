@@ -1,14 +1,17 @@
 package com.sprk.one_to_many.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@ToString(exclude = {"courses"})
 public class Instructor {
 
     @Id
@@ -26,15 +29,15 @@ public class Instructor {
     @JsonManagedReference
     private InstructorDetail instructorDetail;
 
-//    Many Courses
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor")
+    //    Many Courses
+    @OneToMany(mappedBy = "instructor",fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
+    @JsonIgnore
     private List<Course> courses;
 
 
     void addCourse(Course course) {
-        if(courses == null)
-        {
+        if (courses == null) {
             courses = new ArrayList<Course>();
         }
         courses.add(course);
