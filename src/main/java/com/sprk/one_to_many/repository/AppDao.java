@@ -87,7 +87,7 @@ public class AppDao {
 
     public List<Course> findCoursesByInstructorId(int instructorId) {
 
-        TypedQuery<Course> query = (TypedQuery<Course>) entityManager.createQuery("from Course where instructor.instructorId = :data");
+        TypedQuery<Course> query =  entityManager.createQuery("from Course where instructor.instructorId = :data", Course.class);
 
         query.setParameter("data", instructorId);
 
