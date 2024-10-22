@@ -102,11 +102,9 @@ public class DemoController {
     @GetMapping("/getcoursesbyid/{instructorId}")
     public List<Course> getCoursesByInstructorId(@PathVariable int instructorId) {
 
-        Instructor instructor = appDao.getInstructorById(instructorId);
+        List<Course> courses= appDao.findCoursesByInstructorId(instructorId); // Instructor + InstructorDetail
 
-//        System.out.println(instructor);
-//        System.out.println(instructor.getCourses());
-        return instructor.getCourses();
+        return courses;
     }
 
 }

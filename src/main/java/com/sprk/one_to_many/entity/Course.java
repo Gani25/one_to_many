@@ -19,7 +19,7 @@ public class Course {
 
     private String courseDuration;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     @JsonBackReference
     @JsonIgnore
