@@ -33,7 +33,7 @@ public class DemoController {
         Instructor instructor = appDao.getInstructorById(instructorId);
 
         System.out.println(instructor);
-        System.out.println("Courses:- " +instructor.getCourses());
+//        System.out.println("Courses:- " +instructor.getCourses());
         return instructor;
     }
 

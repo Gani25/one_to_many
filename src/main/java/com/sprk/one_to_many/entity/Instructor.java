@@ -30,7 +30,7 @@ public class Instructor {
     private InstructorDetail instructorDetail;
 
     //    Many Courses
-    @OneToMany(mappedBy = "instructor",fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(mappedBy = "instructor",fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
     @JsonIgnore
     private List<Course> courses;
