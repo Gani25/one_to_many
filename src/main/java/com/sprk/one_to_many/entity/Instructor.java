@@ -32,7 +32,7 @@ public class Instructor {
     //    Many Courses
     @OneToMany(mappedBy = "instructor",fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
-    @JsonIgnore
+//    @JsonIgnore
     private List<Course> courses;
 
 

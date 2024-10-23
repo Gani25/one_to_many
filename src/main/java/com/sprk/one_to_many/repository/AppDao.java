@@ -40,6 +40,10 @@ public class AppDao {
     public String deleteInstructorById(int instructorId) {
         Instructor instructor = getInstructorById(instructorId);
         if (instructor != null) {
+            List<Course> courses = instructor.getCourses();
+            for (Course course : courses) {
+                course.setInstructor(null);
+            }
             entityManager.remove(instructor);
             return "Deleted successfully";
         } else {

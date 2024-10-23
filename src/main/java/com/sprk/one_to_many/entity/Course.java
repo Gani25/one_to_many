@@ -22,7 +22,7 @@ public class Course {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     @JsonBackReference
-    @JsonIgnore
+//    @JsonIgnore
     private Instructor instructor;
 
 
