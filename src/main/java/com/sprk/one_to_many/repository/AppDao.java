@@ -99,4 +99,14 @@ public class AppDao {
 
         return courses;
     }
+
+    public Instructor findInstructorJoinFetch(int instructorId) {
+
+        TypedQuery<Instructor> query =  entityManager.createQuery("from Instructor i join fetch i.courses join fetch i.instructorDetail  where i.instructorId = :data", Instructor.class);
+
+        query.setParameter("data", instructorId);
+
+        Instructor instructor = query.getSingleResult();
+        return instructor;
+    }
 }

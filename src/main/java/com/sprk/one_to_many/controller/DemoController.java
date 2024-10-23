@@ -107,6 +107,16 @@ public class DemoController {
         return courses;
     }
 
+    @GetMapping("/getinstructorjoinfetch/{instructorId}")
+    public Instructor getInstructorJoinFetch(@PathVariable int instructorId) {
+
+        Instructor instructor= appDao.findInstructorJoinFetch(instructorId); // Instructor + InstructorDetail
+
+
+
+        return instructor;
+    }
+
 }
 
 
