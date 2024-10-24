@@ -7,6 +7,7 @@ import com.sprk.one_to_many.repository.AppDao;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,11 +19,15 @@ public class DemoController {
     @PostMapping("/save")
     public Instructor saveInstructor(@RequestBody Instructor instructor) {
 
-        List<Course> courses = instructor.getCourses();
-
-        for (Course course : courses) {
-            course.setInstructor(instructor);
+        if (instructor.getCourses() != null) {
+            List<Course> courses = instructor.getCourses();
+            for (Course course : courses) {
+                course.setInstructor(instructor);
+            }
+        } else {
+            instructor.setCourses(null);
         }
+
 
         return appDao.saveInstructor(instructor);
     }
@@ -102,7 +107,7 @@ public class DemoController {
     @GetMapping("/getcoursesbyid/{instructorId}")
     public List<Course> getCoursesByInstructorId(@PathVariable int instructorId) {
 
-        List<Course> courses= appDao.findCoursesByInstructorId(instructorId); // Instructor + InstructorDetail
+        List<Course> courses = appDao.findCoursesByInstructorId(instructorId); // Instructor + InstructorDetail
 
         return courses;
     }
@@ -110,8 +115,7 @@ public class DemoController {
     @GetMapping("/getinstructorjoinfetch/{instructorId}")
     public Instructor getInstructorJoinFetch(@PathVariable int instructorId) {
 
-        Instructor instructor= appDao.findInstructorJoinFetch(instructorId); // Instructor + InstructorDetail
-
+        Instructor instructor = appDao.findInstructorJoinFetch(instructorId); // Instructor + InstructorDetail
 
 
         return instructor;
@@ -129,6 +133,11 @@ public class DemoController {
 
     }
 
+    @PutMapping("/updateinstructorincourse/{instructorId}/{courseId}")
+    public String updateInstructorForCourse(@PathVariable int instructorId, @PathVariable int courseId) {
+
+        return appDao.updateInstructorInCourse(instructorId,courseId);
+    }
 }
 
 

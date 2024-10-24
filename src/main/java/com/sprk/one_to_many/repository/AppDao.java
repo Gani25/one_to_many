@@ -81,17 +81,17 @@ public class AppDao {
     public Instructor updateInstrutorDetail(int instructorId, InstructorDetail instructorDetail) {
 
         Instructor instructor = entityManager.find(Instructor.class, instructorId);
-        if(instructor != null) {
+        if (instructor != null) {
             instructor.setInstructorDetail(instructorDetail);
-            return  entityManager.merge(instructor);
-        }else{
-            return  null;
+            return entityManager.merge(instructor);
+        } else {
+            return null;
         }
     }
 
     public List<Course> findCoursesByInstructorId(int instructorId) {
 
-        TypedQuery<Course> query =  entityManager.createQuery("from Course where instructor.instructorId = :data", Course.class);
+        TypedQuery<Course> query = entityManager.createQuery("from Course where instructor.instructorId = :data", Course.class);
 
         query.setParameter("data", instructorId);
 
@@ -102,7 +102,7 @@ public class AppDao {
 
     public Instructor findInstructorJoinFetch(int instructorId) {
 
-        TypedQuery<Instructor> query =  entityManager.createQuery("from Instructor i join fetch i.courses join fetch i.instructorDetail  where i.instructorId = :data", Instructor.class);
+        TypedQuery<Instructor> query = entityManager.createQuery("from Instructor i join fetch i.courses join fetch i.instructorDetail  where i.instructorId = :data", Instructor.class);
 
         query.setParameter("data", instructorId);
 
@@ -114,7 +114,7 @@ public class AppDao {
     public String updateCourse(int courseId, Course course) {
 
         Course dbCOurse = entityManager.find(Course.class, courseId);
-        if(dbCOurse != null) {
+        if (dbCOurse != null) {
             course.setCourseId(courseId);
 
             entityManager.merge(course);
@@ -129,5 +129,24 @@ public class AppDao {
         List<Course> courses = entityManager.createQuery("from Course").getResultList();
 
         return courses;
+    }
+
+    @Transactional
+    public String updateInstructorInCourse(int instructorId, int courseId) {
+
+        Course dbCOurse = entityManager.find(Course.class, courseId);
+        Instructor instructor = getInstructorById(instructorId);
+        if (dbCOurse != null && instructor != null) {
+            dbCOurse.setInstructor(instructor);
+
+            entityManager.merge(dbCOurse);
+            return "Update successfull";
+        } else if (dbCOurse == null) {
+
+            return "Course with id " + courseId + " not found";
+        } else {
+            return "Instructor with id " + instructorId + " not found";
+
+        }
     }
 }
