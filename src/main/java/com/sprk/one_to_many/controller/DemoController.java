@@ -117,6 +117,18 @@ public class DemoController {
         return instructor;
     }
 
+    @GetMapping("/getcourses")
+    public List<Course> getCourses() {
+        return appDao.findAllCourses();
+    }
+
+    @PutMapping("/updatecourse/{courseId}")
+    public String updateCourse(@PathVariable int courseId, @RequestBody Course course) {
+
+        return appDao.updateCourse(courseId, course);
+
+    }
+
 }
 
 

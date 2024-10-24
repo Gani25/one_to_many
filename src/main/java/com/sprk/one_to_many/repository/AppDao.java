@@ -109,4 +109,25 @@ public class AppDao {
         Instructor instructor = query.getSingleResult();
         return instructor;
     }
+
+    @Transactional
+    public String updateCourse(int courseId, Course course) {
+
+        Course dbCOurse = entityManager.find(Course.class, courseId);
+        if(dbCOurse != null) {
+            course.setCourseId(courseId);
+
+            entityManager.merge(course);
+            return "Update successfull";
+        }
+
+        return "Course with id " + courseId + " not found";
+    }
+
+    public List<Course> findAllCourses() {
+
+        List<Course> courses = entityManager.createQuery("from Course").getResultList();
+
+        return courses;
+    }
 }
